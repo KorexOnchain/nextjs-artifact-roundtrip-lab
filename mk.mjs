@@ -1,8 +1,8 @@
 import fs from 'node:fs'
 const victim = 'b'.repeat(40)
 const dirs = [
-  `art/@next/..\\..\\..\\commits\\${victim}\\next`,
-  `art/..\\..\\commits\\${victim}\\next`,
+  `art/@next/safe\\..\\..\\..\\commits\\${victim}\\next`,
+  `art/safe\\..\\..\\..\\commits\\${victim}\\next`,
   `art/next`,
 ]
 for (const d of dirs) fs.mkdirSync(d, { recursive: true })
