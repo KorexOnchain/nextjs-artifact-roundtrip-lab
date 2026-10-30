@@ -1,0 +1,28 @@
+name: artifact-roundtrip
+on:
+  workflow_dispatch:
+  push:
+jobs:
+  produce:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: node mk.mjs
+      - name: show what is on disk
+        run: find art -name '*.tgz' -printf '%P\n'
+      - uses: actions/upload-artifact@v4
+        with:
+          name: preview-tarballs
+          path: art/*
+          if-no-files-found: error
+  consume:
+    needs: produce
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: preview-tarballs
+          path: dl
+      - name: assert names survived
+        run: node check.mjs
