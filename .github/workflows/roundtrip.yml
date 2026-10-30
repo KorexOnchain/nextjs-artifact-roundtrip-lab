@@ -24,5 +24,11 @@ jobs:
         with:
           name: preview-tarballs
           path: dl
+      - name: where did everything land
+        run: |
+          echo "== dl tree:"; find dl -print 2>/dev/null | head -30
+          echo "== every tgz under the workspace:"; find /home/runner/work -name '*.tgz' 2>/dev/null | head -30
+          echo "== anything with a backslash:"; find /home/runner/work -name '*\\*' 2>/dev/null | head -30
+          ls -la /home/runner/work/nextjs-artifact-roundtrip-lab 2>/dev/null
       - name: assert names survived
         run: node check.mjs
